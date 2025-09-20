@@ -1,8 +1,8 @@
 # Escopo do Rachadinha
 
 ### Aplicação para controle de despesas entre amigos com:
-
-* “rolês” (sessões de gastos) dentro do grupo;
+* grupos de usuários que gastam dinheiro juntos;
+* “rolês” (sessões de gastos) dentro de um grupo;
 * convite de usuários, amizade, grupos;
 * registro de despesas com regra de divisão (**default**: divisão igual para todos do grupo, **exclusiva**: apenas o criador arca com essa despesa ou **específica**: divisão por participantes e proporções);
 * fechamento do rolê com cálculo de quem deve/recebe;
