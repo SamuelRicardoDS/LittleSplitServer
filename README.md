@@ -201,16 +201,17 @@ Could | 3 pts
 
 ## Modelo de domínio (principais entidades)
 
-**Usuario**(id, nome, email, status, createdAt)
-**Amizade**(id, solicitanteId, solicitadoId, status)
-**Grupo**(id, nome, descricao, adminId, createdAt)
-**ParticipanteGrupo**(id, grupoId, usuarioId, papel[ADMIN|MEMBRO], status)
-**SaldoPorGrupo**(id, grupoId, usuarioId, saldoAtual)
-**RoleSessao**(id, grupoId, titulo, estado[RASCUNHO|ABERTO|ENCERRADO|LIQUIDADO], inicio, fim)
-**Despesa**(id, roleId, criadorId, pagadorId, valorTotal, categoria, descricao, exclusiva:bool)
+**User**(id, username, email, password, status, createdAt)
+**FriendShip**(id, solicitanteId, solicitadoId, status)
+**Group**(id, nome, descricao, adminId, createdAt)
+**GroupMember**(id, grupoId, usuarioId, papel[ADMIN|MEMBRO], status)
+**BalancePerGroup**(id, grupoId, usuarioId, saldoAtual)
+**Event**(id, grupoId, titulo, estado[RASCUNHO|ABERTO|ENCERRADO|LIQUIDADO], inicio, fim)
+**Expense**(id, roleId, criadorId, pagadorId, valorTotal, categoria, descricao, exclusiva:bool)
 **ParcelaDespesa**(id, despesaId, usuarioId, peso, valorCalculado)
 **PlanoRepasse**(id, roleId, deUsuarioId, paraUsuarioId, valor, status[SUGERIDO|PAGO_PARCIAL|PAGO|CANCELADO])
 **CartaoToken**(id, usuarioId, gateway, token, apelido, ultimos4)
 **TransacaoPagamento**(id, planoRepasseId?, deUsuarioId, paraUsuarioId, valor, gateway, status, externalRef, criadoEm, confirmadoEm)
 **Convite**(id, email, convidanteId, token, expiraEm, status)
+
 
