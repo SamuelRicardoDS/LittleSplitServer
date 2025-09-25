@@ -3,7 +3,7 @@ import { BaseError } from "./BaseError";
 
 export class NotFoundError extends BaseError {
     statusCode = 404;
-    isOperational: true;
+    isOperational = true;
 
     constructor(public resource: string) {
         super(`${resource} not found`);

@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  email     String   @unique
+  password  String
+  status    String   @default("ACTIVE")
+  createdAt DateTime @default(now())
+}
+
+model FriendShip {
+  id        String   @id @default(cuid())
+  solicitanteId String
+  solicitadoId  String
+  status        String @default("PENDIENTE")
+}
+
+model Group {
+  id        String   @id @default(cuid())
+  nome      String
+  descricao String
+  adminId   String
+  createdAt DateTime @default(now())
+}
+
+model GroupMember {
+  id        String   @id @default(cuid())
+  grupoId   String
+  usuarioId String
+  papel     String   @default("MEMBRO")
+  status    String   @default("PENDIENTE")
+}
+
+model BalancePerGroup {
+  id        String   @id @default(cuid())
+  grupoId   String
+  usuarioId String
+  saldoAtual Float
+}
+
+model Event {
+  id        String   @id @default(cuid())
+  grupoId   String
+  titulo    String
+  estado    String   @default("RASCUNHO")
+  inicio    DateTime
+  fim       DateTime
+}
+
+model Expense {
+  id        String   @id @default(cuid())
+  roleId    String
+  criadorId String
+  pagadorId String
+  valorTotal Float
+  categoria String
+  descricao String
+  exclusiva Boolean  @default(false)
+}
+
+
