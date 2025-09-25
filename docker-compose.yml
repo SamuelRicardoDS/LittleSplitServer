@@ -1,4 +1,3 @@
-
 services:
   # Banco de dados PostgreSQL
   postgres:
@@ -13,9 +12,13 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql # Script inicial (opcional)
     networks:
       - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-myuser}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   # Aplicação Node.js
   app:
@@ -30,16 +33,14 @@ services:
       NODE_ENV: production
       DATABASE_URL: postgresql://${POSTGRES_USER:-myuser}:${POSTGRES_PASSWORD:-mypassword}@postgres:5432/${POSTGRES_DB:-mydatabase}?schema=public
     depends_on:
-      - postgres
-    volumes:
-      - ./src:/app/src:ro # Para desenvolvimento (remover em produção)
+      postgres:
+        condition: service_healthy
     networks:
       - app-network
     command: sh -c "npx prisma db push && npm start"
 
 volumes:
   postgres_data:
-  pgadmin_data:
 
 networks:
   app-network:

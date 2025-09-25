@@ -5,6 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --watch src --exec ts-node src/index.ts",
+    "start": "node dist/index.js",
+    "clean": "find src -type f \\( -name '*.js' -o -name '*.js.map' -o -name '*.d.ts' -o -name '*.d.ts.map' \\) -delete && rm -rf dist",
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
@@ -23,10 +26,12 @@
     "winston": "^3.17.0"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/node": "^24.3.1",
     "nodemon": "^3.1.10",
     "prisma": "^6.16.2",
+    "ts-node": "^10.9.2",
     "typescript": "^5.9.2"
   }
 }

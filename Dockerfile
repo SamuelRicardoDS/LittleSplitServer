@@ -1,26 +1,25 @@
-# Dockerfile
-FROM node:18-alpine
 
-# Instalar dependências do sistema necessárias para o Prisma
-RUN apk add --no-cache openssl
+FROM node:lts-alpine3.22
 
-# Definir diretório de trabalho
+# Define o diretório de trabalho dentro do container
 WORKDIR /app
 
-# Copiar package.json e package-lock.json (se existir)
+# Copia o package.json e instala as dependências
 COPY package*.json ./
+RUN npm install
 
-# Instalar dependências
-RUN npm ci --only=production
+COPY prisma ./prisma
 
-# Copiar código fonte
+# Copia o restante do código para dentro do container
 COPY . .
 
-# Gerar cliente do Prisma
+# Compila o código TypeScript
 RUN npx prisma generate
+RUN npm run build
 
-# Expor porta
-EXPOSE 3000
+RUN mkdir -p /app/uploads && chown -R node:node /app/uploads
 
-# Comando para iniciar a aplicação
-CMD ["npm", "start"]
+EXPOSE 3333
+
+# Comando para rodar a aplicação
+CMD ["npm","run", "start"]

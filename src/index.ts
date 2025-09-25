@@ -1,3 +1,4 @@
+//index.ts
 import express, { Application } from 'express';
 import { config } from './config/config';
 import cors from 'cors';
@@ -37,6 +38,14 @@ class App {
     }
 
     private initializeRoutes(): void {
+        this.app.get('/health', (req, res) => {
+            res.status(200).json({
+                status: 'OK',
+                service: config.app.name,
+                version: config.app.version,
+                timestamp: new Date().toISOString()
+            });
+        });
         
     }
 

@@ -1,0 +1,54 @@
+services:
+  # Banco de dados PostgreSQL
+  postgres:
+    image: postgres:16
+    container_name: postgres_db_dev
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydatabase
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data_dev:/var/lib/postgresql/data
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U myuser -d mydatabase"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Aplicação Node.js em modo desenvolvimento
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: node_app_dev
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgresql://myuser:mypassword@postgres:5432/mydatabase?schema=public
+    env_file:
+      - .env.development
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./src:/app/src
+      - ./prisma:/app/prisma
+      - ./tsconfig.json:/app/tsconfig.json
+      - ./package.json:/app/package.json
+    networks:
+      - app-network
+    command: sh -c "npx prisma db push && npm run dev"
+
+volumes:
+  postgres_data_dev:
+
+networks:
+  app-network:
+    driver: bridge
