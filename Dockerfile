@@ -20,6 +20,7 @@ RUN npm run build
 RUN mkdir -p /app/uploads && chown -R node:node /app/uploads
 
 EXPOSE 3333
+EXPOSE 5555
 
 # Comando para rodar a aplicação
 CMD ["npm","run", "start"]

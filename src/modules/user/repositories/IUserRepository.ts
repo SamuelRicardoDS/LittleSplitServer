@@ -1,5 +1,6 @@
-import { User } from "@prisma/client";
+import { Prisma, User } from "@prisma/client";
 
 export interface IUserRepository {
-    createUser(user: User): Promise<any>;
+    createUser(user: Prisma.UserCreateInput): Promise<any>;
+    userAlreadyExists(email: string): Promise<boolean>;
 }

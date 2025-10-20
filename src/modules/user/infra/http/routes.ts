@@ -1,6 +1,6 @@
 import { Application, Router } from 'express';
-import { createUserController } from './controllers/CreateUserController';
 import { PrismaUserRepository } from '../repositories/PrismaUserRepository';
+import { createUserController } from './controllers/CreateUserController';
 
 export function registerUserRoutes(app: Application) {
   const router = Router();
@@ -8,7 +8,7 @@ export function registerUserRoutes(app: Application) {
   const userRepository = new PrismaUserRepository();
   const createUser = new createUserController(userRepository);
 
-  router.post('/create', (req, res) => createUser.execute(req, res));
+  router.post('/create', (req, res, next) => createUser.execute(req, res, next));
 
   app.use('/users', router);
 }

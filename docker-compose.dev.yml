@@ -45,7 +45,10 @@ services:
       - ./package.json:/app/package.json
     networks:
       - app-network
-    command: sh -c "npx prisma db push && npm run dev"
+    command: >
+      sh -c "npx prisma generate &&
+            npm run dev & 
+            npx prisma studio --port 5555 --hostname 0.0.0.0 --browser none"
 
 volumes:
   postgres_data_dev:
