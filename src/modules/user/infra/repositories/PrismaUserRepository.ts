@@ -18,4 +18,21 @@ export class PrismaUserRepository implements IUserRepository {
             return !!user;
         });
     }
+
+    findByEmail(email: string): Promise<User | null> {
+        return prisma.user.findFirst({
+            where: {
+                email: email
+            }
+        });
+    }
+
+    updateUser(id: string, data: Prisma.UserUpdateInput): Promise<User> {
+        return prisma.user.update({
+            where: {
+                id: id
+            },
+            data: data
+        });
+    }
 }

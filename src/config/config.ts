@@ -25,5 +25,9 @@ export const config = {
   security: {
     helmetEnabled: process.env.HELMET_ENABLED !== 'false',
     compressionEnabled: process.env.COMPRESSION_ENABLED !== 'false'
+  },
+  jwt: {
+    secret: process.env.JWT_SECRET || 'secret',
+    expiresIn: process.env.JWT_EXPIRES_IN || '4h'
   }
 };

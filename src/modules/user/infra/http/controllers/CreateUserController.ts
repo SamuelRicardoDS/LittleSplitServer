@@ -1,4 +1,3 @@
-// modules/user/infra/http/controllers/CreateUserController.ts
 import { Request, Response, NextFunction } from "express";
 import { makeCreateUser } from "../../../useCases/factories/makeCreateUser";
 import { IUserRepository } from "../../../repositories/IUserRepository";

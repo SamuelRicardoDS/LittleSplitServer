@@ -1,4 +1,3 @@
-//index.ts
 import express, { Application } from 'express';
 import { config } from './config/config';
 import cors from 'cors';
