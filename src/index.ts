@@ -1,9 +1,9 @@
-//index.ts
 import express, { Application } from 'express';
 import { config } from './config/config';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
 import { loggerMiddleware } from './shared/logger';
+import { registerUserRoutes } from './modules/user/infra/http/routes';
 
 
 class App {
@@ -46,6 +46,8 @@ class App {
                 timestamp: new Date().toISOString()
             });
         });
+
+        registerUserRoutes(this.app);
         
     }
 
